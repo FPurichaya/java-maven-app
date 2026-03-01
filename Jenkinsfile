@@ -27,7 +27,7 @@ pipeline {
                     params.executeTests
                 }
             }
-            step {
+            steps {
                 script {
                     gv.testApp
                 }
