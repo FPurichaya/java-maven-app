@@ -17,26 +17,26 @@ pipeline {
         stage("build") {
             steps {
                 script {
-                    gv.buildApp
+                    gv.buildApp()
                 }
             }
         }
         stage("test") {
             when {
                 expression {
-                    params.executeTests
+                    params.executeTests()
                 }
             }
             steps {
                 script {
-                    gv.testApp
+                    gv.testApp()
                 }
             }
         }
         stage("deploy") {
             steps {
                 script {
-                    gv.deployApp
+                    gv.deployApp()
                 }
             }
         }
