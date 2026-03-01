@@ -6,6 +6,6 @@ def testApp() {
 }
 def deployApp() {
     echo 'deploying the application...'
-    echo "Deploying version ${VERSION}"
+    echo "Deploying version ${env.VERSION}"
 }
 return this
