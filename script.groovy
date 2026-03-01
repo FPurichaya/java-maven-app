@@ -6,6 +6,5 @@ def testApp() {
 }
 def deployApp() {
     echo 'deploying the application...'
-    echo "Deploying version ${this.params.VERSION}"
 }
 return this
