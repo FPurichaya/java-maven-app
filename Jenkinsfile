@@ -13,7 +13,6 @@ pipeline {
                 }
             }
         }
-
         stage("build") {
             steps {
                 script {
@@ -26,10 +25,10 @@ pipeline {
                 expression {
                     params.executeTests
                 }
-            }
                 script {
                     gv.testApp
                 }
+            }
         }
         stage("deploy") {
             steps {
