@@ -1,17 +1,9 @@
-FROM node:20-alpine
+FROM maven:3.9-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-ENV MONGO_DB_USERNAME=admin \
-    MONGO_DB_PWD=password
-
-RUN mkdir -p /home/app
-
-#set default dir so that next commands executes in /home/app dir
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /home/app
-
-COPY . /home/app
-
-# will execute npm install in /home/app because of WORKDIR
-RUN npm install
-
-# no need for /home/app/server.js because of WORKDIR
-CMD ["node", "server.js"]
+COPY --from=build /app/target/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]]
