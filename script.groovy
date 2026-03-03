@@ -1,6 +1,7 @@
 def buildJar() {
     echo 'building the application...'
-    sh 'mvn package'
+    def mvnHome = tool 'maven--3.9' 
+    sh "${mvnHome}/bin/mvn package"
 }
 
 def buildImage() {
