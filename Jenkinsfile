@@ -1,4 +1,4 @@
-def gv
+/*def gv
 
 pipeline {   
     agent any
@@ -39,3 +39,41 @@ pipeline {
         }               
     }
 } 
+*/
+pipeline {
+    agent any
+    stages {
+        stage ("test") {
+            steps {
+                script {
+                    echo 'Testing the application...'
+                    echo "Executeing pipeline for $BRACH_NAME"
+                }
+            }
+        }
+        stage ("build") {
+            when {
+                expression {
+                    BRANCH_NAME == "master"
+                }
+            }
+            steps {
+                script {
+                    echo 'Building the application...'
+                }
+            }
+        }
+        stage ("deploy") {
+            when {
+                expression {
+                    BRANCH_NAME == "master"
+                }
+            }
+            steps {
+                script {
+                    echo 'Deploying the application...'
+                }
+            }
+        }
+    }
+}
