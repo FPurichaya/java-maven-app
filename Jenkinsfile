@@ -20,7 +20,7 @@ pipeline {
             }
         }
 
-        stage("build app") {
+        stage('build app') {
             steps {
                 script {
                 echo 'building the application...'
@@ -29,7 +29,7 @@ pipeline {
             }
         }
 
-        stage("build image") {
+        stage('build image') {
             steps {
                 script {
                 echo "building the docker image..."
@@ -41,7 +41,7 @@ pipeline {
             }
         }
 
-        stage("deploy") {
+        stage('deploy') {
             steps {
                 script {
                 echo 'deploying docker image...'
