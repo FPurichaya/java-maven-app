@@ -23,8 +23,8 @@ pipeline {
         stage('build app') {
             steps {
                 script {
-                echo 'building the application...'
-                sh 'mvn clean package'
+                    echo 'building the application...'
+                    sh 'mvn clean package'
                 }
             }
         }
@@ -32,13 +32,14 @@ pipeline {
         stage('build image') {
             steps {
                 script {
-                echo "building the docker image..."
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+                    echo "building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "docker build -t fpurichaya/demo-app:${IMAGE_NAME} ."
                     sh 'echo $PASS | docker login -u $USER --password-stdin'
                     sh "docker push fpurichaya/demo-app:${IMAGE_NAME}"
                 }
             }
+        }
         }
 
         stage('deploy') {
