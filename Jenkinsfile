@@ -23,10 +23,12 @@ pipeline {
             }
         }
 
-        stage("build image") {
+        stage("build and push image") {
             steps {
                 script {
-                    buildImage 'demo-app:jma-3.0'
+                    buildImage 'fpurichaya/demo-app:jma-3.0'
+                    dockerLogin()
+                    dockerPush 'fpurichaya/demo-app:jma-3.0'
                 }
             }
         }
