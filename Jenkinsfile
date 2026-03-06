@@ -1,6 +1,10 @@
 def gv
 
+<<<<<<< Updated upstream
 pipeline {
+=======
+pipeline {   
+>>>>>>> Stashed changes
     agent any
     tools {
         maven 'maven--3.9'
@@ -13,12 +17,17 @@ pipeline {
                     sh 'mvn build-helper:parse-version versions:set \
                         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
                         versions:commit'
+<<<<<<< Updated upstream
                     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+=======
+                    def matcher = readfile('pom.xml') =~ '<version>(.+)</version>'
+>>>>>>> Stashed changes
                     def version = matcher[0][1]
                     env.IMAGE_NAME = "$version-$BUILD_NUMBER"
                 }
             }
         }
+<<<<<<< Updated upstream
         stage('build app') {
             steps {
                 script {
@@ -68,3 +77,37 @@ pipeline {
 */
         }
     }
+=======
+        stage("build app") {
+            steps {
+                script {
+                echo 'building the application...'
+                sh 'mvn clean package'
+                }
+            }
+        }
+
+        stage("build image") {
+            steps {
+                script {
+                echo "building the docker image..."
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+                    sh "docker build -t fpurichaya/demo-app:${IMAGE_NAME} ."
+                    sh 'echo $PASS | docker login -u $USER --password-stdin'
+                    sh "docker push fpurichaya/demo-app:${IMAGE_NAME}"
+                }
+            }
+        }
+
+        stage("deploy") {
+            steps {
+                script {
+                echo 'deploying docker image...'
+                }
+            }
+        }               
+    }
+} 
+}
+
+>>>>>>> Stashed changes
